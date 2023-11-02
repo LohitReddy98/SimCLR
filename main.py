@@ -55,8 +55,6 @@ def test(net, memory_data_loader, test_data_loader):
             feature, out = net(data.cuda(non_blocking=True))
             feature_bank.append(feature)
         # [D, N]
-        np.savez('feature_bank.npz', *feature_bank)
-
         feature_bank = torch.cat(feature_bank, dim=0).t().contiguous()
         # [N]
         feature_labels = torch.tensor(memory_data_loader.dataset.targets, device=feature_bank.device)
