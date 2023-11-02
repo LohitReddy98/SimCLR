@@ -1,0 +1,2 @@
+epoch,train_loss,test_acc@1,test_acc@5
+1,5.548125066512671,40.63,89.44
