@@ -28,6 +28,9 @@ class MNISTPair(MNIST):
         if img.shape[0] == 1:  # Grayscale image
             img = Image.fromarray(img[0], mode='L')  # Convert to a grayscale Image
             img = transforms.Grayscale(num_output_channels=3)(img)  # Convert to RGB
+            print(img.shape[0])
+            print(img)
+
 
         if self.transform is not None:
             pos_1 = self.transform(img)
