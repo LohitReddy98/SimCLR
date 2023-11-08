@@ -38,7 +38,7 @@ class MNISTPair(MNIST):
 
 
 train_transform = transforms.Compose([
-    transforms.RandomResizedCrop(32),
+    transforms.RandomResizedCrop(28),
     transforms.RandomHorizontalFlip(p=0.5),
     transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
     transforms.RandomGrayscale(p=0.2),
