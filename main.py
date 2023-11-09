@@ -103,12 +103,12 @@ if __name__ == '__main__':
     batch_size, epochs = args.batch_size, args.epochs
 
     # data prepare
-    train_data = utils.EMNISTPair(root='data', train=True, transform=utils.train_transform, download=True)
+    train_data = utils.EMNISTPair(root='data', train=True, transform=utils.train_transform, download=True,split="letters")
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=16, pin_memory=True,
                               drop_last=True)
-    memory_data = utils.EMNISTPair(root='data', train=True, transform=utils.test_transform, download=True)
+    memory_data = utils.EMNISTPair(root='data', train=True, transform=utils.test_transform, download=True,split="letters")
     memory_loader = DataLoader(memory_data, batch_size=batch_size, shuffle=False, num_workers=16, pin_memory=True)
-    test_data = utils.EMNISTPair(root='data', train=False, transform=utils.test_transform, download=True)
+    test_data = utils.EMNISTPair(root='data', train=False, transform=utils.test_transform, download=True,split="letters")
     test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=16, pin_memory=True)
 
     # model setup and optimizer config
