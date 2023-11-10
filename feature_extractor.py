@@ -8,7 +8,7 @@ import utils
 memory_data = utils.MNISTPair(root='data', train=True, transform=utils.test_transform, download=True)
 memory_loader = DataLoader(memory_data, batch_size=256, shuffle=False, num_workers=2, pin_memory=True)
 
-model_path = 'epoch10_512_mnist.pth'
+model_path = 'models/epoch10_512_mnist.pth'
 model=torch.load(model_path)
 
 total_top1, total_top5, total_num, feature_bank = 0.0, 0.0, 0, []
