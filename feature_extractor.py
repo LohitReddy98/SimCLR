@@ -33,7 +33,7 @@ feature_bank_X = torch.cat(feature_bank, dim=0).contiguous()
 import torch
 import pandas as pd
 
-df = pd.DataFrame(feature_bank_X.cpu().numpy(), columns=[f'col_{i}' for i in range(128)])
+df = pd.DataFrame(feature_bank_X.cpu().numpy(), columns=[f'col_{i}' for i in range(512)])
 
 
 df.shape
