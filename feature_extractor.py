@@ -5,27 +5,17 @@ from tqdm import tqdm
 import numpy as np
 import utils
 
-memory_data = utils.EMNISTPair(root='data', train=True, transform=utils.test_transform, download=True,split="letters")
+memory_data = utils.MNISTPair(root='data', train=True, transform=utils.test_transform, download=True)
 memory_loader = DataLoader(memory_data, batch_size=256, shuffle=False, num_workers=2, pin_memory=True)
 
-
-# 2. Specify the path to the saved model state dictionary
-save_name_pre = "128_0.5_200_256_50"
-# Replace with the actual name you used
-model_path = '{}_modelEMNISTPair.pth'.format(save_name_pre)
-# 3. Load the saved state dictionary
+model_path = 'epoch10_512_mnist.pth'
 model=torch.load(model_path)
-
-# 4. Load the state dictionary into the model
-# model.load_state_dict(state_dict)
-
 
 total_top1, total_top5, total_num, feature_bank = 0.0, 0.0, 0, []
 with torch.no_grad():
         # generate feature bank
         for data, _, target in tqdm(memory_loader, desc='Feature extracting'):
             feature, out = model(data.cuda(non_blocking=True))
-            print(out)
             feature_bank.append(out)
 
         # [D, N]
@@ -39,8 +29,6 @@ with torch.no_grad():
 
 feature_bank_X = torch.cat(feature_bank, dim=0).contiguous()
 
-
-type(feature_bank_X)
 
 import torch
 import pandas as pd
@@ -64,8 +52,6 @@ df.insert(0, 'feat', feat)
 df.shape
 
 
-df.to_csv('Emnist_resnet_cc_128.csv', index=False)
+df.to_csv('mnist_resnet_cc_256.csv', index=False)
 
 print("Excel file created: output.xlsx")
-
-
