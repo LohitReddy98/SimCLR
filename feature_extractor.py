@@ -36,11 +36,10 @@ import pandas as pd
 df = pd.DataFrame(feature_bank_X.cpu().numpy(), columns=[f'col_{i}' for i in range(512)])
 
 
-df.shape
-
+print(df.shape)
 feat=feature_labels.cpu().numpy()
 
-feat.shape
+print(feat.shape)
 
 feat = feat.reshape(-1, 1)
 
@@ -49,7 +48,7 @@ feat.shape
 
 df.insert(0, 'feat', feat)
 
-df.shape
+print(df.shape)
 
 
 df.to_csv('mnist_resnet_cc_256.csv', index=False)
