@@ -103,17 +103,17 @@ if __name__ == '__main__':
     batch_size, epochs = args.batch_size, args.epochs
 
     # data prepare
-    train_data = utils.MNISTPair(root='data', train=True, transform=utils.train_transform, download=True)
+    train_data = utils.CIFAR10Pair(root='data', train=True, transform=utils.train_transform, download=True)
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=16, pin_memory=True,
                               drop_last=True)
-    memory_data = utils.MNISTPair(root='data', train=True, transform=utils.test_transform, download=True)
+    memory_data = utils.CIFAR10Pair(root='data', train=True, transform=utils.test_transform, download=True)
     memory_loader = DataLoader(memory_data, batch_size=batch_size, shuffle=False, num_workers=16, pin_memory=True)
-    test_data = utils.MNISTPair(root='data', train=False, transform=utils.test_transform, download=True)
+    test_data = utils.CIFAR10Pair(root='data', train=False, transform=utils.test_transform, download=True)
     test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=16, pin_memory=True)
 
     # model setup and optimizer config
     model = Model(feature_dim).cuda()
-    flops, params = profile(model, inputs=(torch.randn(1, 1, 28, 28).cuda(),))
+    flops, params = profile(model, inputs=(torch.randn(1, 3, 32, 32).cuda(),))
     flops, params = clever_format([flops, params])
     print('# Model Params: {} FLOPs: {}'.format(params, flops))
     optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-6)
@@ -133,7 +133,7 @@ if __name__ == '__main__':
         results['test_acc@5'].append(test_acc_5)
         # save statistics
         data_frame = pd.DataFrame(data=results, index=range(1, epoch + 1))
-        data_frame.to_csv('results/{}_statistics_modelMnist_512.csv'.format(save_name_pre), index_label='epoch')
+        data_frame.to_csv('results/{}_statistics_modelCifar10_512.csv'.format(save_name_pre), index_label='epoch')
         if test_acc_1 > best_acc:
             best_acc = test_acc_1
-            torch.save(model, 'results/{}_modelMnist_512.pth'.format(save_name_pre))
+            torch.save(model, 'results/{}_modelCifar10_512.pth'.format(save_name_pre))
