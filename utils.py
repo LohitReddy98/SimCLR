@@ -66,6 +66,6 @@ train_transform = transforms.Compose([
 
 test_transform = transforms.Compose([
     transforms.ToTensor(),
-    # transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
-    transforms.Normalize([0.5], [0.5])])  # Grayscale images have one mean and one standard deviation value
+     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
+    # transforms.Normalize([0.5], [0.5])])  # Grayscale images have one mean and one standard deviation value
 
