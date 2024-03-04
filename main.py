@@ -133,7 +133,7 @@ if __name__ == '__main__':
         results['test_acc@5'].append(test_acc_5)
         # save statistics
         data_frame = pd.DataFrame(data=results, index=range(1, epoch + 1))
-        data_frame.to_csv('results/{}_statistics_modelCifar10_512.csv'.format(save_name_pre), index_label='epoch')
+        data_frame.to_csv('results/{}_statistics_modelFashoinMnist_512.csv'.format(save_name_pre), index_label='epoch')
         if test_acc_1 > best_acc:
             best_acc = test_acc_1
-            torch.save(model, 'results/{}_modelCifar10_512.pth'.format(save_name_pre))
+            torch.save(model, 'results/{}_modelFashoinMnist.pth'.format(save_name_pre))

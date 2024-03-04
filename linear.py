@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 from thop import profile, clever_format
 from torch.utils.data import DataLoader
-from torchvision.datasets import CIFAR10
+from torchvision.datasets import FashionMNIST
 from tqdm import tqdm
 
 import utils
@@ -69,16 +69,16 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     model_path, batch_size, epochs = args.model_path, args.batch_size, args.epochs
-    train_data = CIFAR10(root='data', train=True, transform=utils.train_transform, download=True)
+    train_data = FashionMNIST(root='data', train=True, transform=utils.train_transform, download=True)
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=16, pin_memory=True)
-    test_data = CIFAR10(root='data', train=False, transform=utils.test_transform, download=True)
+    test_data = FashionMNIST(root='data', train=False, transform=utils.test_transform, download=True)
     test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=16, pin_memory=True)
 
     model = Net(num_class=len(train_data.classes), pretrained_path=model_path).cuda()
     for param in model.f.parameters():
         param.requires_grad = False
 
-    flops, params = profile(model, inputs=(torch.randn(1, 3, 32, 32).cuda(),))
+    flops, params = profile(model, inputs=(torch.randn(1, 1, 28, 28).cuda(),))
     flops, params = clever_format([flops, params])
     print('# Model Params: {} FLOPs: {}'.format(params, flops))
     optimizer = optim.Adam(model.fc.parameters(), lr=1e-3, weight_decay=1e-6)
