@@ -51,7 +51,7 @@ df.insert(0, 'feat', feat)
 print(df.shape)
 
 
-df.to_csv('cifar_resnet_cc_256.csv', index=False)
+df.to_csv('fashionMnist_resnet_cc_256.csv', index=False)
 
 print("Excel file created: output.xlsx")
 
@@ -59,7 +59,7 @@ print("Excel file created: output.xlsx")
 memory_data = utils.CIFAR10Pair(root='data', train=True, transform=utils.test_transform, download=True)
 memory_loader = DataLoader(memory_data, batch_size=256, shuffle=False, num_workers=2, pin_memory=True)
 
-model_path = 'models/epoch100_Cifar10_512.pth'
+model_path = 'models/epoch100_fashionMnist_256.pth'
 model=torch.load(model_path)
 
 total_top1, total_top5, total_num, feature_bank = 0.0, 0.0, 0, []
